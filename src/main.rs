@@ -1,3 +1,4 @@
+#![deny(clippy::all)]
 extern crate minifb;
 
 mod vector;
@@ -32,6 +33,6 @@ fn main() {
         // Render the world
         world.render(&mut display);
         // We unwrap here as we want this code to exit if it fails. Real applications may want to handle this in a different way
-        window.update_with_buffer(&display.color_buffer(), WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
+        window.update_with_buffer(display.color_buffer(), WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
     }
 }
