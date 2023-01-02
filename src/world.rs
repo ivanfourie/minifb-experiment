@@ -16,23 +16,19 @@ impl World {
         let mut point_count = 0;
         let mut cube_points = [Vec3 { x: 0.0, y: 0.0, z: 0.0 }; N_POINTS];
 
-        let mut x = -1.0;
-        let mut y = -1.0;
-        let mut z = -1.0;
-
-        while x <= 1.0 {
-            while y <= 1.0 {
-                while z <= 1.0 {
-                    let new_point = Vec3 { x, y, z };
-                    cube_points[point_count] = new_point;
+        // Create a cube of points
+        // Rust doesn't allow you to iterate over floating point numbers, so we
+        // have to use integer values and convert them to floats.
+        for x in (-100i8..=100).step_by(25) {
+            let x = f32::from(x) * 0.01;
+            for y in (-100i8..=100).step_by(25) {
+                let y = f32::from(y) * 0.01;
+                for z in (-100i8..=100).step_by(25) {
+                    let z = f32::from(z) * 0.01;
+                    cube_points[point_count] = Vec3 { x, y, z };
                     point_count += 1;
-                    z += 0.25;
                 }
-                z = -1.0;
-                y += 0.25;
             }
-            y = -1.0;
-            x += 0.25
         }
 
         Ok(World {
