@@ -9,7 +9,6 @@ pub struct Display {
 
 impl Display {
     pub fn new(window_width: u32, window_height: u32) -> Result<Self, String> {
-
         let buffer = vec![0; (window_width * window_height) as usize];
 
         Ok(Display {
@@ -49,7 +48,7 @@ impl Drawable for Display {
     fn draw_grid(&mut self, size: usize, color: u32) {
         // Draw a background grid that fills the entire window.
         // Lines should be rendedered at every row/col multiple of 10.
-    
+
         for y in (0..self.width).step_by(size) {
             for x in (0..self.width).step_by(size) {
                 self.draw_pixel(x as usize, y as usize, color)
@@ -62,23 +61,27 @@ impl Drawable for Display {
         // Calculate the difference in x and y between the start and end points
         let delta_x = x1 - x0;
         let delta_y = y1 - y0;
-    
+
         // Find the length of the longest side of the line
         let longest_side_length = cmp::max(delta_x.abs(), delta_y.abs());
-    
+
         // Calculate the increments in x and y for each step
         let x_inc = delta_x as f32 / longest_side_length as f32;
         let y_inc = delta_y as f32 / longest_side_length as f32;
-    
+
         // Initialize the current x and y values
         let mut current_x = x0 as f32;
         let mut current_y = y0 as f32;
-    
+
         // Iterate for the length of the longest side
         for _ in 0..=longest_side_length {
             // Draw a pixel at the current x and y position, rounded to the nearest integer
-            self.draw_pixel(current_x.round() as usize, current_y.round() as usize, color);
-    
+            self.draw_pixel(
+                current_x.round() as usize,
+                current_y.round() as usize,
+                color,
+            );
+
             // Increment the current x and y values
             current_x += x_inc;
             current_y += y_inc;
@@ -93,5 +96,5 @@ impl Drawable for Display {
                 self.draw_pixel(current_x as usize, current_y as usize, color);
             }
         }
-    }    
+    }
 }

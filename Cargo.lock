@@ -254,7 +254,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "minifb-experiment"
+name = "minifb_experiment"
 version = "0.1.0"
 dependencies = [
  "minifb",
