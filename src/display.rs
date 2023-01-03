@@ -8,14 +8,14 @@ pub struct Display {
 }
 
 impl Display {
-    pub fn new(window_width: u32, window_height: u32) -> Result<Self, String> {
+    pub fn new(window_width: u32, window_height: u32) -> Self {
         let buffer = vec![0; (window_width * window_height) as usize];
 
-        Ok(Display {
+        Display {
             color_buffer: buffer,
             width: window_width,
             height: window_height,
-        })
+        }
     }
 
     pub fn color_buffer(&mut self) -> &mut Vec<u32> {
@@ -51,7 +51,7 @@ impl Drawable for Display {
 
         for y in (0..self.width).step_by(size) {
             for x in (0..self.width).step_by(size) {
-                self.draw_pixel(x as usize, y as usize, color)
+                self.draw_pixel(x as usize, y as usize, color);
             }
         }
     }
@@ -93,7 +93,11 @@ impl Drawable for Display {
             for j in 0..height {
                 let current_x = x + i;
                 let current_y = y + j;
-                self.draw_pixel(current_x as usize, current_y as usize, color);
+                self.draw_pixel(
+                    current_x.try_into().unwrap(),
+                    current_y.try_into().unwrap(),
+                    color,
+                );
             }
         }
     }

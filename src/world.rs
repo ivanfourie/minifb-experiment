@@ -12,7 +12,7 @@ pub struct World {
 }
 
 impl World {
-    pub fn new() -> Result<Self, String> {
+    pub fn new() -> Self {
         let mut point_count = 0;
         let mut cube_points = [Vec3 {
             x: 0.0,
@@ -35,7 +35,7 @@ impl World {
             }
         }
 
-        Ok(World {
+        World {
             cube_points,
             projected_points: [Vec2 { x: 0.0, y: 0.0 }; N_POINTS],
             camera_position: Vec3 {
@@ -49,7 +49,7 @@ impl World {
                 z: 0.0,
             },
             fov_factor: 640.0,
-        })
+        }
     }
 
     pub fn project(&mut self, point: Vec3) -> Vec2 {
@@ -83,8 +83,8 @@ impl World {
     }
 
     pub fn render(&self, display: &mut Display) {
-        display.clear_color_buffer(0xFF000000);
-        display.draw_grid(10, 0xFF444444);
+        display.clear_color_buffer(0xFF00_0000);
+        display.draw_grid(10, 0xFF44_4444);
 
         for i in 0..N_POINTS {
             let point = self.projected_points[i];
@@ -93,7 +93,7 @@ impl World {
                 (point.y + (display.height as f32 / 2.0)) as i32,
                 4,
                 4,
-                0xFFFFFF00,
+                0xFFFF_FF00,
             );
         }
     }

@@ -1,4 +1,4 @@
-#![deny(clippy::all)]
+#![deny(clippy::all, clippy::pedantic)]
 extern crate minifb;
 
 mod display;
@@ -27,9 +27,12 @@ fn main() {
     window.limit_update_rate(Some(std::time::Duration::from_micros(16600)));
 
     // Create a new display that contains a buffer of pixels
-    let mut display = Display::new(WINDOW_WIDTH as u32, WINDOW_HEIGHT as u32).unwrap();
+    let mut display = Display::new(
+        WINDOW_WIDTH.try_into().unwrap(),
+        WINDOW_HEIGHT.try_into().unwrap(),
+    );
     // Create a new world
-    let mut world = World::new().unwrap();
+    let mut world = World::new();
 
     while window.is_open() && !window.is_key_down(Key::Escape) {
         // Update the world
